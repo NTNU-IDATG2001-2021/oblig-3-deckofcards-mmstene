@@ -1,3 +1,6 @@
+package run;
+import cards.DeckOfCards;
+
 public class App {
     public static void main(String[] args) {
         DeckOfCards deckOfCards = new DeckOfCards();
