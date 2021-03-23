@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Represents a playing card. A playing card has a number (face) between
  * 1 and 13, where 1 is called an Ace, 11 = Knight, 12 = Queen and 13 = King.
@@ -9,7 +12,7 @@
 public class PlayingCard {
 
     private final char suit; // 'S'=spade, 'H'=heart, 'D'=diamonds, 'C'=clubs
-    private final int face; // a number between 1 and 13
+    private final String face; // a number between 1 and 13
 
     /**
      * Creates an instance of a PlayingCard with a given suit and face.
@@ -18,7 +21,7 @@ public class PlayingCard {
      *             'H' for Heart, 'D' for Diamonds and 'C' for clubs
      * @param face The face value of the card, an integer between 1 and 13
      */
-    public PlayingCard(char suit, int face) {
+    public PlayingCard(char suit, String face) {
         this.suit = suit;
         this.face = face;
     }
@@ -47,7 +50,15 @@ public class PlayingCard {
      *
      * @return the face of the card
      */
-    public int getFace() {
+    public String getFace() {
         return face;
+    }
+
+    public static List<Character> getValidSuits(){
+        return Arrays.asList('S','H','D','C');
+    }
+
+    public static List<String> getValidFaceNames(){
+        return Arrays.asList("2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace");
     }
 }
