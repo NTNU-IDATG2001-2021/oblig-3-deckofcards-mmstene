@@ -14,7 +14,7 @@ import java.util.List;
 public class PlayingCard {
 
     private final char suit; // 'S'=spade, 'H'=heart, 'D'=diamonds, 'C'=clubs
-    private final String face; // a number between 1 and 13
+    private final Face face; // a number between 1 and 13
 
     /**
      * Creates an instance of a cards.PlayingCard with a given suit and face.
@@ -23,7 +23,7 @@ public class PlayingCard {
      *             'H' for Heart, 'D' for Diamonds and 'C' for clubs
      * @param face The face value of the card, an integer between 1 and 13
      */
-    public PlayingCard(char suit, String face) {
+    public PlayingCard(char suit, Face face) {
         this.suit = suit;
         this.face = face;
     }
@@ -52,7 +52,7 @@ public class PlayingCard {
      *
      * @return the face of the card
      */
-    public String getFace() {
+    public Face getFace() {
         return face;
     }
 
@@ -60,7 +60,27 @@ public class PlayingCard {
         return Arrays.asList('S','H','D','C');
     }
 
-    public static List<String> getValidFaceNames(){
-        return Arrays.asList("2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace");
+    public static List<Face> getValidFaceNames(){
+        return Arrays.asList(new Face(2),
+                new Face(3),
+                new Face(4),
+                new Face(5),
+                new Face(6),
+                new Face(7),
+                new Face(8),
+                new Face(9),
+                new Face(10),
+                new Face(11,"Jack"),
+                new Face(12,"Queen"),
+                new Face(13,"King"),
+                new Face(1,"Ace"));
+    }
+
+    @Override
+    public String toString() {
+        return "PlayingCard{" +
+                "suit=" + suit +
+                ", face='" + face + '\'' +
+                '}';
     }
 }
