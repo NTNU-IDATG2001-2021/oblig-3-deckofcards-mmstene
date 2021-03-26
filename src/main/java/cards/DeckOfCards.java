@@ -1,10 +1,6 @@
 package cards;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
 /**
  * This class will represent a full deck of cards. No jokers.
@@ -12,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DeckOfCards {
     private ArrayList<PlayingCard> deck;
     private Random random = new Random();
-    ;
 
     public DeckOfCards() {
         deck = new ArrayList<>();
@@ -32,24 +27,39 @@ public class DeckOfCards {
         this.deck = deck;
     }
 
-    public Collection<PlayingCard> dealHand(int n) {
+    public ArrayList<PlayingCard> dealHand(int n) {
         ArrayList<PlayingCard> randomCards = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        Collections.shuffle(randomCards);
+
         if (n > deck.size() || n < 0) {
             n = deck.size();
         }
-        for (int i = deck.size(); i > (deck.size() - n); i--) {
-            int rand = random.nextInt(i);
-            randomCards.add(deck.get(rand));
+
+        while (list.size() <= n) {
+            int rand = random.nextInt(deck.size());
+            if (!list.contains(rand)) {
+                list.add(rand);
+                randomCards.add(deck.get(rand));
+            }
         }
+
+        removeList(randomCards);
+
         return randomCards;
     }
 
-    public int sumOfHand(Collection<PlayingCard> hand){
-        AtomicInteger total = new AtomicInteger();
+    public void removeList(List<PlayingCard> cardsThatMatch) {
+        deck.removeAll(cardsThatMatch);
+    }
 
-        hand.forEach(s -> {
-            total.addAndGet(s.getFace().getFaceValue());
-        });
-        return total.get();
+    public void getFullDeck() {
+        deck.clear();
+        new DeckOfCards();
+    }
+
+    public int sumOfHand(ArrayList<PlayingCard> hand) {
+        return hand.stream().
+                reduce(0, (sum, playingcard) -> sum + playingcard.getFace().getFaceValue(), Integer::sum);
     }
 }
