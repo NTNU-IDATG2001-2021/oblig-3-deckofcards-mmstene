@@ -35,7 +35,7 @@ public class PlayingCard {
      * @return the suit and face of the card as a string
      */
     public String getAsString() {
-        return String.format("%s%s", suit, face);
+        return String.format("%s %s", suit, face);
     }
 
     /**
@@ -76,11 +76,7 @@ public class PlayingCard {
                 new Face(1,"Ace"));
     }
 
-    @Override
-    public String toString() {
-        return "PlayingCard{" +
-                "suit=" + suit +
-                ", face='" + face + '\'' +
-                '}';
+    public void getDetails(){
+        System.out.println(getAsString());
     }
 }

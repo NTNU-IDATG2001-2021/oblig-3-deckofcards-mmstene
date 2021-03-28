@@ -1,6 +1,12 @@
 package cards;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.List;
+import java.util.Collections;
+import java.util.Collection;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This class will represent a full deck of cards. No jokers.
@@ -29,22 +35,22 @@ public class DeckOfCards {
 
     public ArrayList<PlayingCard> dealHand(int n) {
         ArrayList<PlayingCard> randomCards = new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
+        List<Integer> randomIntegers = new ArrayList<>();
         Collections.shuffle(randomCards);
 
         if (n > deck.size() || n < 0) {
             n = deck.size();
         }
 
-        while (list.size() <= n) {
+        while (randomIntegers.size() <= n) {
             int rand = random.nextInt(deck.size());
-            if (!list.contains(rand)) {
-                list.add(rand);
+            if (!randomIntegers.contains(rand)) {
+                randomIntegers.add(rand);
                 randomCards.add(deck.get(rand));
             }
         }
 
-        removeList(randomCards);
+        //removeList(randomCards);
 
         return randomCards;
     }
@@ -53,13 +59,36 @@ public class DeckOfCards {
         deck.removeAll(cardsThatMatch);
     }
 
-    public void getFullDeck() {
+    /*public void getFullDeck() {
         deck.clear();
         new DeckOfCards();
-    }
+    }*/
 
-    public int sumOfHand(ArrayList<PlayingCard> hand) {
+    public int sumOfHand(Collection<PlayingCard> hand){
         return hand.stream().
                 reduce(0, (sum, playingcard) -> sum + playingcard.getFace().getFaceValue(), Integer::sum);
+    }
+
+    public void printHearts(ArrayList<PlayingCard> cardsOnHand){
+        cardsOnHand.stream().
+                filter(playingCard -> playingCard.getSuit() == 'H').
+                forEach(PlayingCard::getDetails);
+    }
+    public boolean hasFlush(ArrayList<PlayingCard> cards) {
+        Map<Character, Long> suitCount = cards.stream().
+                collect(Collectors.groupingBy(PlayingCard::getSuit, Collectors.counting()));
+
+        for (Long number : suitCount.values()) {
+            if (number >= 5) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasQueenOfSpades(ArrayList<PlayingCard> cards){
+        return cards.stream().
+                anyMatch(playingCard -> playingCard.getSuit() == 'S' &&
+                        playingCard.getFace().getFaceValue() == 12);
     }
 }

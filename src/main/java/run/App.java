@@ -9,10 +9,11 @@ public class App {
     public static void main(String[] args) {
         DeckOfCards deckOfCards = new DeckOfCards();
         ArrayList<PlayingCard> hand = deckOfCards.dealHand(4);
-        System.out.println(hand);
+        hand.forEach(PlayingCard::getDetails);
         System.out.println(deckOfCards.sumOfHand(hand));
         System.out.println(deckOfCards.getDeck().size());
-        deckOfCards.getFullDeck();
-        System.out.println(deckOfCards.getDeck().size());
+        System.out.println(deckOfCards.hasFlush(hand));
+        deckOfCards.printHearts(hand);
+        System.out.println(deckOfCards.hasQueenOfSpades(hand));
     }
 }
