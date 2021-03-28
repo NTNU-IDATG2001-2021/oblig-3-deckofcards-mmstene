@@ -1,5 +1,7 @@
 package cards;
 
+import javafx.scene.image.Image;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.List;
@@ -13,7 +15,8 @@ import java.util.stream.Collectors;
  */
 public class DeckOfCards {
     private ArrayList<PlayingCard> deck;
-    private Random random = new Random();
+    private Random random;
+    private Image faceOfCardImage;
 
     public DeckOfCards() {
         deck = new ArrayList<>();
@@ -34,6 +37,7 @@ public class DeckOfCards {
     }
 
     public ArrayList<PlayingCard> dealHand(int n) {
+        random = new Random();
         ArrayList<PlayingCard> randomCards = new ArrayList<>();
         List<Integer> randomIntegers = new ArrayList<>();
         Collections.shuffle(randomCards);
