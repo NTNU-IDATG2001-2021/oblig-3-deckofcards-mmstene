@@ -50,19 +50,8 @@ public class DeckOfCards {
             }
         }
 
-        //removeList(randomCards);
-
         return randomCards;
     }
-
-    public void removeList(List<PlayingCard> cardsThatMatch) {
-        deck.removeAll(cardsThatMatch);
-    }
-
-    /*public void getFullDeck() {
-        deck.clear();
-        new DeckOfCards();
-    }*/
 
     public int sumOfHand(Collection<PlayingCard> hand){
         return hand.stream().
