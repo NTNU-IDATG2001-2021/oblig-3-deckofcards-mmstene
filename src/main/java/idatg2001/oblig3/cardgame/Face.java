@@ -1,4 +1,4 @@
-package cards;
+package idatg2001.oblig3.cardgame;
 
 public class Face {
     private final int faceValue;

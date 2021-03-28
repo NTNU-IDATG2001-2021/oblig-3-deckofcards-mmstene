@@ -1,4 +1,4 @@
-package cards;
+package idatg2001.oblig3.cardgame;
 
 import javafx.scene.image.Image;
 
@@ -16,16 +16,22 @@ import java.util.stream.Collectors;
 public class DeckOfCards {
     private ArrayList<PlayingCard> deck;
     private Random random;
-    private Image faceOfCardImage;
+    private Image backOfCardImage;
+
+    public DeckOfCards(ArrayList<PlayingCard> deck) {
+        this.deck = deck;
+        //backOfCardImage = new Image("./resources/images/2_of_clubs.png");
+    }
 
     public DeckOfCards() {
         deck = new ArrayList<>();
 
         List<Character> suits = PlayingCard.getValidSuits(); // Static method so can be called like this.
-
         List<Face> faceNames = PlayingCard.getValidFaceNames(); // Static method so can be called like this.
 
         suits.forEach(type -> faceNames.forEach(value -> deck.add(new PlayingCard(type, value))));
+
+        //backOfCardImage = new Image();
     }
 
     public ArrayList<PlayingCard> getDeck() {
@@ -34,6 +40,14 @@ public class DeckOfCards {
 
     public void setDeck(ArrayList<PlayingCard> deck) {
         this.deck = deck;
+    }
+
+    public Image getBackOfCardImage() {
+        return backOfCardImage;
+    }
+
+    public void setBackOfCardImage(Image backOfCardImage) {
+        this.backOfCardImage = backOfCardImage;
     }
 
     public ArrayList<PlayingCard> dealHand(int n) {

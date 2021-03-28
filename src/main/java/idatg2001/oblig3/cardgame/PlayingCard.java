@@ -1,4 +1,6 @@
-package cards;
+package idatg2001.oblig3.cardgame;
+
+import javafx.scene.image.Image;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +17,7 @@ public class PlayingCard {
 
     private final char suit; // 'S'=spade, 'H'=heart, 'D'=diamonds, 'C'=clubs
     private final Face face; // a number between 1 and 13
+    private Image image;
 
     /**
      * Creates an instance of a cards.PlayingCard with a given suit and face.
