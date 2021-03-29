@@ -2,12 +2,7 @@ package idatg2001.oblig3.cardgame;
 
 import javafx.scene.image.Image;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.List;
-import java.util.Collections;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -16,22 +11,23 @@ import java.util.stream.Collectors;
 public class DeckOfCards {
     private ArrayList<PlayingCard> deck;
     private Random random;
+    private final char[] suits;
+    private final int[] faceNames;
     private Image backOfCardImage;
 
-    public DeckOfCards(ArrayList<PlayingCard> deck) {
-        this.deck = deck;
-        //backOfCardImage = new Image("./resources/images/2_of_clubs.png");
-    }
-
     public DeckOfCards() {
+        suits = new char[]{'H', 'D', 'S', 'C'};
+        faceNames = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13};
         deck = new ArrayList<>();
 
-        List<Character> suits = PlayingCard.getValidSuits(); // Static method so can be called like this.
-        List<Face> faceNames = PlayingCard.getValidFaceNames(); // Static method so can be called like this.
+        for(char suit : suits){
+            for(int faceName : faceNames){
+                deck.add(new PlayingCard(suit, faceName));
+            }
+        }
 
-        suits.forEach(type -> faceNames.forEach(value -> deck.add(new PlayingCard(type, value))));
 
-        //backOfCardImage = new Image();
+        backOfCardImage = new Image("/images/backOfCard.png");
     }
 
     public ArrayList<PlayingCard> getDeck() {
@@ -53,7 +49,7 @@ public class DeckOfCards {
     public ArrayList<PlayingCard> dealHand(int n) {
         random = new Random();
         ArrayList<PlayingCard> randomCards = new ArrayList<>();
-        List<Integer> randomIntegers = new ArrayList<>();
+        ArrayList<Integer> randomIntegers = new ArrayList<>();
         Collections.shuffle(randomCards);
 
         if (n > deck.size() || n < 0) {
@@ -73,13 +69,15 @@ public class DeckOfCards {
 
     public int sumOfHand(Collection<PlayingCard> hand){
         return hand.stream().
-                reduce(0, (sum, playingcard) -> sum + playingcard.getFace().getFaceValue(), Integer::sum);
+                reduce(0, (sum, playingcard) -> sum + playingcard.getFace(), Integer::sum);
     }
 
-    public void printHearts(ArrayList<PlayingCard> cardsOnHand){
+    public ArrayList<PlayingCard> printHearts(ArrayList<PlayingCard> cardsOnHand){
+        ArrayList<PlayingCard> cardsOfHearts = new ArrayList<>();
         cardsOnHand.stream().
                 filter(playingCard -> playingCard.getSuit() == 'H').
-                forEach(PlayingCard::getDetails);
+                forEach(cardsOfHearts::add);
+        return cardsOfHearts;
     }
     public boolean hasFlush(ArrayList<PlayingCard> cards) {
         Map<Character, Long> suitCount = cards.stream().
@@ -96,6 +94,6 @@ public class DeckOfCards {
     public boolean hasQueenOfSpades(ArrayList<PlayingCard> cards){
         return cards.stream().
                 anyMatch(playingCard -> playingCard.getSuit() == 'S' &&
-                        playingCard.getFace().getFaceValue() == 12);
+                        playingCard.getFace() == 12);
     }
 }

@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class PlayingCard {
 
-    private final char suit; // 'S'=spade, 'H'=heart, 'D'=diamonds, 'C'=clubs
-    private final Face face; // a number between 1 and 13
+    private final char suit; // spades, hearts, diamonds, clubs
+    private final int face; // a number between 1 and 13
     private Image image;
 
     /**
@@ -26,9 +26,11 @@ public class PlayingCard {
      *             'H' for Heart, 'D' for Diamonds and 'C' for clubs
      * @param face The face value of the card, an integer between 1 and 13
      */
-    public PlayingCard(char suit, Face face) {
+    public PlayingCard(char suit, int face) {
         this.suit = suit;
         this.face = face;
+        String fileName = face + Character.toString(suit) + ".png";
+        image = new Image("/images/" + fileName);
     }
 
     /**
@@ -38,7 +40,7 @@ public class PlayingCard {
      * @return the suit and face of the card as a string
      */
     public String getAsString() {
-        return String.format("%s %s", suit, face);
+        return String.format("%s%s", suit, face);
     }
 
     /**
@@ -55,31 +57,20 @@ public class PlayingCard {
      *
      * @return the face of the card
      */
-    public Face getFace() {
+    public int getFace() {
         return face;
     }
 
-    public static List<Character> getValidSuits(){
-        return Arrays.asList('S','H','D','C');
+    public Image getImage() {
+        return image;
     }
 
-    public static List<Face> getValidFaceNames(){
-        return Arrays.asList(new Face(2),
-                new Face(3),
-                new Face(4),
-                new Face(5),
-                new Face(6),
-                new Face(7),
-                new Face(8),
-                new Face(9),
-                new Face(10),
-                new Face(11,"Jack"),
-                new Face(12,"Queen"),
-                new Face(13,"King"),
-                new Face(1,"Ace"));
+    public void setImage(Image image) {
+        this.image = image;
     }
 
-    public void getDetails(){
-        System.out.println(getAsString());
+    @Override
+    public String toString() {
+        return getAsString();
     }
 }
