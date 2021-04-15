@@ -1,10 +1,5 @@
 package idatg2001.oblig3.cardgame;
 
-import javafx.scene.image.Image;
-
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Represents a playing card. A playing card has a number (face) between
  * 1 and 13, where 1 is called an Ace, 11 = Knight, 12 = Queen and 13 = King.
@@ -17,7 +12,6 @@ public class PlayingCard {
 
     private final char suit; // spades, hearts, diamonds, clubs
     private final int face; // a number between 1 and 13
-    private Image image;
 
     /**
      * Creates an instance of a cards.PlayingCard with a given suit and face.
@@ -29,8 +23,10 @@ public class PlayingCard {
     public PlayingCard(char suit, int face) {
         this.suit = suit;
         this.face = face;
-        String fileName = face + Character.toString(suit) + ".png";
-        image = new Image("/images/" + fileName);
+    }
+
+    public String getCardFaceAndSuit() {
+        return face + Character.toString(suit) + ".png";
     }
 
     /**
@@ -59,14 +55,6 @@ public class PlayingCard {
      */
     public int getFace() {
         return face;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     @Override

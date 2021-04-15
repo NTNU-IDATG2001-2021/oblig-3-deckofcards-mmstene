@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PlayingCardController implements Initializable {
@@ -18,13 +20,18 @@ public class PlayingCardController implements Initializable {
 
 
     /*
-    * Using @FXML to be able to have my variables private and still accessed within the .fxml file.
+     * Using @FXML to be able to have my variables private and still accessed within the .fxml file.
      */
-    @FXML private ImageView cardToShow1;
-    @FXML private ImageView cardToShow2;
-    @FXML private ImageView cardToShow3;
-    @FXML private ImageView cardToShow4;
-    @FXML private ImageView cardToShow5;
+    @FXML
+    private ImageView cardToShow1;
+    @FXML
+    private ImageView cardToShow2;
+    @FXML
+    private ImageView cardToShow3;
+    @FXML
+    private ImageView cardToShow4;
+    @FXML
+    private ImageView cardToShow5;
 
     @FXML
     private TextField sumOfHand;
@@ -36,34 +43,48 @@ public class PlayingCardController implements Initializable {
     private TextField cardsOfHearts;
 
 
-    @FXML private Button dealHandButton;
+    @FXML
+    private Button dealHandButton;
+
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         deck = new DeckOfCards();
-        cardToShow1.setImage(deck.getBackOfCardImage());
-        cardToShow2.setImage(deck.getBackOfCardImage());
-        cardToShow3.setImage(deck.getBackOfCardImage());
-        cardToShow4.setImage(deck.getBackOfCardImage());
-        cardToShow5.setImage(deck.getBackOfCardImage());
+        cardToShow1.setImage(initializeBackOfCardImage());
+        cardToShow2.setImage(initializeBackOfCardImage());
+        cardToShow3.setImage(initializeBackOfCardImage());
+        cardToShow4.setImage(initializeBackOfCardImage());
+        cardToShow5.setImage(initializeBackOfCardImage());
+    }
+    @FXML
+    private Image initializeBackOfCardImage() {
+        return new Image(Objects.requireNonNull(
+                getClass().getResourceAsStream("/images/backOfCard.png")));
     }
 
     @FXML
-    public void nextCardButtonPushed(ActionEvent actionEvent) {
+    private void nextCardButtonPushed(ActionEvent actionEvent) {
         ArrayList<PlayingCard> list = deck.dealHand(4);
 
-        cardToShow1.setImage(list.get(0).getImage());
-        cardToShow2.setImage(list.get(1).getImage());
-        cardToShow3.setImage(list.get(2).getImage());
-        cardToShow4.setImage(list.get(3).getImage());
-        cardToShow5.setImage(list.get(4).getImage());
+        cardToShow1.setImage(getImage(list, 0));
+        cardToShow2.setImage(getImage(list, 1));
+        cardToShow3.setImage(getImage(list, 2));
+        cardToShow4.setImage(getImage(list, 3));
+        cardToShow5.setImage(getImage(list, 4));
+
 
         sumOfHand.setText(String.valueOf(deck.sumOfHand(list)));
         doesHaveFlush.setText(String.valueOf(deck.hasFlush(list)));
         doesQueenOfSpadesExist.setText(String.valueOf(deck.hasQueenOfSpades(list)));
-        if((deck.printHearts(list).size() != 0)){
+        if ((deck.printHearts(list).size() != 0)) {
             cardsOfHearts.setText(deck.printHearts(list).toString());
-        }else{
+        } else {
             cardsOfHearts.setText("");
         }
+    }
+    @FXML
+    private Image getImage(ArrayList<PlayingCard> list, int index) {
+        return new Image(Objects.requireNonNull(
+                getClass().getResourceAsStream("/images/" + list.get(index).getCardFaceAndSuit())));
     }
 }
