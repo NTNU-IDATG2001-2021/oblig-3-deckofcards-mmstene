@@ -1,5 +1,6 @@
 import idatg2001.oblig3.cardgame.DeckOfCards;
 import idatg2001.oblig3.cardgame.PlayingCard;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,11 @@ class DeckOfCardsTest {
     void start() {
         deckOfCards = new DeckOfCards();
         hand = new ArrayList<>();
+    }
+
+    @AfterEach
+    void tearDown() {
+        hand.clear();
     }
 
     @Test
@@ -39,7 +45,7 @@ class DeckOfCardsTest {
     @DisplayName("Checking if the method picks up every card of hearts.")
     void printHearts() {
         hand.addAll(deckOfCards.dealHand(51));
-        assertEquals(13,deckOfCards.printHearts(hand).size());
+        assertEquals(13, deckOfCards.printHearts(hand).size());
     }
 
     @Test
